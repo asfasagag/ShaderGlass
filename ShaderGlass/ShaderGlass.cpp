@@ -423,7 +423,7 @@ void ShaderGlass::Process(winrt::com_ptr<ID3D11Texture2D> texture, ULONGLONG fra
 {
     auto nowTicks            = GetTickCount64();
     auto timeSinceLastRender = nowTicks - m_prevRenderTicks;
-    auto logicalFrameNo      = (int)roundf((nowTicks - m_startTicks) / 16.6666666f); // fix shaders at 60 fps
+    auto logicalFrameNo      = (int)roundf((nowTicks - m_startTicks) / (1000.0f / 120.0f)); // fix shaders at 60 fps
 
     // same input
     if(frameTicks == m_prevFrameTicks)
@@ -432,7 +432,7 @@ void ShaderGlass::Process(winrt::com_ptr<ID3D11Texture2D> texture, ULONGLONG fra
             return;
 
         auto timeSinceLastInput = nowTicks - frameTicks;
-        if(timeSinceLastInput < 20) // 3.3 ms delay allowance for frame timing
+        if(timeSinceLastInput < 10) // 3.3 ms delay allowance for frame timing
             return;
     }
 
